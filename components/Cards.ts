@@ -160,7 +160,7 @@ function check_cards(array: Array<any>): Array<any> {
         }
     }
     if (len > 5 ){
-        while (len == 5) {
+        while (len != 5) {
             array.pop();
             len --;
         }
