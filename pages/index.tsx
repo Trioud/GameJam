@@ -9,15 +9,15 @@ import { results } from '../components/Results'
 
 const Cards_left = ({ lives, people, place }) => {
 	return (
-		<section>
-			<h4 style={{ textAlign: 'right' }}>
-				You can reveal {lives} cards
+		<section className={styles.infos}>
+			<h4 style={{ textAlign: 'right', color: 'white' }}>
+				You can reveal <b style={{fontSize: "24px"}}>{lives}</b> cards
 			</h4>
-			<h4 style={{ textAlign: 'right' }}>
-				{people} candidates left
+			<h4 style={{ textAlign: 'right', color: 'white' }}>
+				<b style={{fontSize: "24px"}}>{people}</b> candidates left
 			</h4>
-			<h4 style={{ textAlign: 'right' }}>
-				{place} places left
+			<h4 style={{ textAlign: 'right', color: 'white' }}>
+				<b style={{fontSize: "24px"}}>{place}</b> places left
 			</h4>
 		</section>
 	);
@@ -27,7 +27,6 @@ const Card = ({ setLives, lives, item, reload, treload }) => {
 	const [stop, setStop] = useState(false);
 
 	useEffect(() => {
-		console.log('RELOAD ?');
 		setStop(true);
 		const elem = document.getElementsByClassName("card");
 		for (var i = elem.length - 1; i >= 0; --i) {
@@ -45,11 +44,10 @@ const Card = ({ setLives, lives, item, reload, treload }) => {
 			setLives(lives - 1);
 		}
 	}
-	console.log(item.image);
 	return (
 		<div className="scene">
 			<div className="card" onClick={ClickCard} id="card">
-				<div className="card__face card__face--front">{item.id}</div>
+				<div className="card__face card__face--front"></div>
 				<div className="card__face card__face--back" >{!stop && <Image src={item.image} layout="fill" />} </div>
 			</div>
 		</div>
@@ -89,20 +87,18 @@ const Card_Manager = ({ setLives, lives, data, index, setIndex, people, reload, 
 
 	return (
 		<>
-			<h3 style={{ textAlign: 'center' }}>{data?.name}</h3>
+			<h3 style={{ textAlign: 'center', color: 'white', fontWeight: '100', fontSize: '30px', margin: 0 }}>{data?.name}</h3>
 			<section className={styles.container}>
-				<button onClick={goLeft} disabled={disable.left}>LEFT</button>
+				<button className={styles.triangle} style={disable.left ? {opacity: 0.5} : undefined} onClick={goLeft} disabled={disable.left}></button>
 				{Card_Creator(data)}
-				<button onClick={goRight} disabled={disable.right}>RIGHT</button>
+				<button className={styles.trianglebis} onClick={goRight} style={disable.right ? {opacity: 0.5} : undefined} disabled={disable.right}></button>
 			</section>
 		</>
 	)
 }
 
 const Home: NextPage = () => {
-
-	const [secret, setSecret] = useState({ verb: "?", envy: "?", job: "?" });
-	const [lives, setLives] = useState(30000);
+	const [lives, setLives] = useState(3);
 	const [index, setIndex] = useState(0);
 	const [people, setPeople] = useState(mockup.length);
 	const [place, setPlace] = useState(15);
@@ -112,10 +108,14 @@ const Home: NextPage = () => {
 	const [end, setEnd] = useState(false);
 
 	useEffect(() => {
+		console.log(`PLACE => ${place} && people => ${people}`);
 		if (place === 0) {
 			setEnd(!end);
 		}
-	}, [place]);
+		if (place >= people) {
+			setEnd(true);
+		}
+	}, [place, people]);
 
 	const Header = () => {
 		return (
@@ -125,20 +125,17 @@ const Home: NextPage = () => {
 		)
 	}
 
-	const SecretSentence = ({ verb, envy, job }) => {
-		return `I ${verb} ${envy} ${job}`;
-	}
-
-	const Moveon = () => {
+	const Moveon = (keep) => {
 		let rest = data.splice(index, 1);
-		habitants.push(rest[0]);
+		if (keep) 
+			habitants.push(rest[0]);
 		setLives(lives + 3);
 	}
 
 	const onAccept = () => {
 		if (index === people - 1)
 			setIndex(index - 1);
-		Moveon();
+		Moveon(true);
 		setPeople(people - 1);
 		setPlace(place - 1);
 		setReload(!reload);
@@ -149,20 +146,19 @@ const Home: NextPage = () => {
 			setIndex(index - 1);
 		setReload(!reload);
 		setPeople(people - 1);
-		Moveon();
+		Moveon(false);
 	}
 
 	const Displayresult = () => {
-		console.log('LOL');
 		return habitants.map((item) => {
-			return <div>{item.name}</div>
+			return <div style={{color: 'white'}}>{item.name}</div>
 		})
 	}
 
 	const DisplayStats = () => {
-		const result = results(data);
+		const result = results(habitants);
 		return (
-			<div>
+			<div style={{color: 'white', marginTop: "40px"}}>
 				<div>
 					ENVY : {result.envy} / 150
 				</div>
@@ -186,17 +182,18 @@ const Home: NextPage = () => {
 				{index}
 				<Cards_left lives={lives} people={people} place={place} />
 				<Card_Manager setLives={setLives} lives={lives} data={data[index]} index={index} setIndex={setIndex} people={people} reload={reload} setReload={setReload} />
-				<h2 style={{ textAlign: 'center' }}>WHAT HE WILL ACCOMPLISH</h2>
-				<h3 style={{ textAlign: 'center' }}> {SecretSentence(secret)}</h3>
 				<div className={styles.buttons}>
-					<button onClick={onAccept}>ACCEPT</button>
-					<button onClick={onReject}>REJECT</button>
+					<button style={{height: "100px", width: "100px", borderRadius: "50%", backgroundColor: "green",  cursor: 'pointer'}} onClick={onAccept}>✅</button>
+					<button style={{height: "100px", width: "100px", borderRadius: "50%", backgroundColor: "red", cursor: 'pointer'}} onClick={onReject}>❌</button>
 				</div>
 			</div>
 			<div hidden={!end}>
-				RESULTS:
-				{Displayresult()}
-				{DisplayStats()}
+					<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', flexDirection: 'column', color: 'white'}}>
+						HABITANTS:
+						{Displayresult()}
+						{DisplayStats()}
+						<button onClick={() => {window.location.href = "/"}} style={{backgroundColor: 'grey', marginTop: "30px", width: "100px", height: "30px", cursor: "pointer"}}>REPLAY</button>
+				</div>
 			</div>
 		</>
 	);

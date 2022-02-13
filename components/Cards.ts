@@ -38,7 +38,6 @@ function card_creator(name: any, num: number) : Cards {
         id: num,
     };
     card.image = name;
-    console.log(`${name} added.`)
     return card;
 }
 
@@ -68,7 +67,6 @@ function fill_card(array: Array<any>) {
 function create_cards(envy: number, job: number, will: number, happy: number,  devil: boolean, angel: boolean): Array<Cards> {
     var cards = []
     var id = 1;
-    console.log(`${envy}, ${job}, ${will}, ${happy}, ${devil}, ${angel}`);
     if (devil == true || angel == true) {
         if (envy == 10 && job == 10 && will == 10 && happy == 10) {
             const rate = getRandomInt(2)
@@ -173,7 +171,7 @@ function create_cards(envy: number, job: number, will: number, happy: number,  d
             cards.push(card_creator(sinj, id));
             id ++;
         }
-        if (happy > 8 && envy > 8 && will > 8 && job < 5) {
+        if (job >= 5) {
             cards.push(card_creator(legobmii, id));
             id ++;
         }
@@ -252,7 +250,6 @@ function create_all_npc() : Array<NPC> {
         all_npc.push(create_npc(name_npc[i]));
         i ++;
     }
-    console.log(all_npc);
     return all_npc;
 }
 
