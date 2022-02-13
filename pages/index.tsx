@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { mockup } from '../data/mockup'
 import fool from '../assets/tarot_de_marseilles_major_arcana/fool.png'
 import Image from 'next/image'
+import { create_all_npc } from '../components/Cards'
+import { results } from '../components/Results'
 
 const Cards_left = ({ lives, people, place }) => {
 	return (
@@ -55,15 +57,15 @@ const Card = ({ setLives, lives, item, reload, treload }) => {
 }
 
 const Card_Manager = ({ setLives, lives, data, index, setIndex, people, reload, setReload }) => {
-	const [disable, setDisable] = useState({left: true, right: false});
+	const [disable, setDisable] = useState({ left: true, right: false });
 
 	useEffect(() => {
 		if (index === 0)
-			setDisable({left: true, right: false});
+			setDisable({ left: true, right: false });
 		else if (index + 1 > people - 1)
-			setDisable({left: false, right: true});
+			setDisable({ left: false, right: true });
 		else
-			setDisable({left: false, right: false});
+			setDisable({ left: false, right: false });
 	}, [reload, index]);
 
 	const Card_Creator = (data) => {
@@ -104,7 +106,7 @@ const Home: NextPage = () => {
 	const [index, setIndex] = useState(0);
 	const [people, setPeople] = useState(mockup.length);
 	const [place, setPlace] = useState(15);
-	const [data, setData] = useState(mockup);
+	const [data, setData] = useState(create_all_npc());
 	const [reload, setReload] = useState(true);
 	const [habitants, setHabitants] = useState([]);
 	const [end, setEnd] = useState(false);
@@ -141,6 +143,10 @@ const Home: NextPage = () => {
 	}
 
 	const onReject = () => {
+		if (index === people - 1)
+			setIndex(index - 1);
+		setReload(!reload);
+		setPeople(people - 1);
 		Moveon();
 	}
 
@@ -151,13 +157,33 @@ const Home: NextPage = () => {
 		})
 	}
 
+	const DisplayStats = () => {
+		const result = results(data);
+		return (
+			<div>
+				<div>
+					ENVY : {result.envy} / 150
+				</div>
+				<div>
+					JOB : {result.job} / 150
+				</div>
+				<div>
+					WILL : {result.will} / 150
+				</div>
+				<div>
+					HAPPY : {result.happy} / 150
+				</div>
+			</div>
+		)
+	}
+
 	return (
 		<>
 			<div hidden={end}>
 				<Header />
 				{index}
 				<Cards_left lives={lives} people={people} place={place} />
-				<Card_Manager setLives={setLives} lives={lives} data={mockup[index]} index={index} setIndex={setIndex} people={people} reload={reload} setReload={setReload}/>
+				<Card_Manager setLives={setLives} lives={lives} data={data[index]} index={index} setIndex={setIndex} people={people} reload={reload} setReload={setReload} />
 				<h2 style={{ textAlign: 'center' }}>WHAT HE WILL ACCOMPLISH</h2>
 				<h3 style={{ textAlign: 'center' }}> {SecretSentence(secret)}</h3>
 				<div className={styles.buttons}>
@@ -168,6 +194,7 @@ const Home: NextPage = () => {
 			<div hidden={!end}>
 				RESULTS:
 				{Displayresult()}
+				{DisplayStats()}
 			</div>
 		</>
 	);
