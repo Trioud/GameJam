@@ -91,6 +91,14 @@ function create_cards(envy: number, job: number, will: number, happy: number,  d
             cards.push(card_creator(pope, id));
             id ++;
         }
+        if (job > 6) {
+            cards.push(card_creator(justice, id));
+            id ++;
+        }
+        if (will > 6) {
+            cards.push(card_creator(chariot, id));
+            id ++;
+        }
         if (job == 0 && happy >= 8) {
             cards.push(card_creator(lovers, id));
             id ++;
@@ -135,7 +143,7 @@ function create_cards(envy: number, job: number, will: number, happy: number,  d
             cards.push(card_creator(wor, id));
             id ++;
         }
-        if (envy == 1 && job == 1 && will == 1 && happy == 1) {
+        if (happy > 4 && envy > 4) {
             cards.push(card_creator(sinj, id));
             id ++;
         }
@@ -149,6 +157,12 @@ function check_cards(array: Array<any>): Array<any> {
         while (len != 5) {
             array.push(card_creator(fool, len + 1));
             len ++;
+        }
+    }
+    if (len > 5 ){
+        while (len == 5) {
+            array.pop();
+            len --;
         }
     }
     return array;
