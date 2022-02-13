@@ -25,7 +25,7 @@ import sinj from '../assets/tarot_de_marseilles_major_arcana/22_sinj.png'
 
 
 var name_npc = ["Acelin", "Amaury", "Anselme", "Anthiaume", "Arthaud", "Aubert", "Audibert", "Aymeric", "Edmond", "Enguerrand", "Ernaut", "Galaad", "Garin", "Gauvain", "Gauvain", "Gibouin", "Hugues", "Jehan", "Lancelot", "Merlin", "Perceval", "Raymond", "Roland", "Tancrède", "Tristan", "Yvain", "Aliénor", "Alix", "Aremburge", "Artémise", "Astride", "Berthe", "Blanche", "Diane", "Gallendis", "Grisélidis", "Hélix", "Héloïse", "Hersende", "Léonor", "Mélissande", "Morgane", "Viviane"];
-var example_card = [fool, magician, hp, empress, emperor, pope, lovers, chariot, hermit, wof, strength, h_man, death, temp, tower, star, moon, sun, wor, sinj];
+var example_card = [fool, magician, hp, empress, emperor, pope, lovers, chariot, hermit, wof, strength, h_man, death, temp, tower, star, moon, wor, sinj];
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -132,7 +132,7 @@ function create_cards(envy: number, job: number, will: number, happy: number,  d
             cards.push(card_creator(hermit, id));
             id ++;
         }
-        if (happy == 10) {
+        if (happy > 6 && envy < 3) {
             cards.push(card_creator(wof, id));
             id ++;
         }
@@ -217,15 +217,15 @@ function create_npc(name:string): NPC {
             angel: false,
         }
     }
-    const rate = getRandomInt(3);
-    if (rate == 1) {
+    const rate = getRandomInt(2);
+    if (rate == 0) {
         npc.stats.devil = true;
         npc.stats.envy = 0;
         npc.stats.job = 0;
         npc.stats.will = 0;
         npc.stats.happy = 0;
     }
-    else if (rate == 2) {
+    else if (rate == 1) {
         npc.stats.angel = true
         npc.stats.envy = 10;
         npc.stats.job = 10;
