@@ -238,8 +238,8 @@ function create_npc(name:string): NPC {
         npc.stats.happy = 10;
     }
     npc.cards = create_cards(npc.stats.envy, npc.stats.job, npc.stats.will, npc.stats.happy, npc.stats.devil, npc.stats.angel);
-    npc.cards = check_cards(npc.cards);
     npc.cards = shuffle(npc.cards);
+    npc.cards = check_cards(npc.cards);
     npc.cards = reset_id(npc.cards);
     return npc;
 }
