@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-// import fool from '../assets/tarot_de_marseilles_major_arcana/fool.png'
-
-interface Cards {
-    image?: string,
-    tooltip?: string,
-    open?: boolean,
-    id: number,
-=======
 import fool from '../assets/tarot_de_marseilles_major_arcana/01_magician.png'
 import sun from '../assets/tarot_de_marseilles_major_arcana/19_sun.png'
 
@@ -15,7 +6,6 @@ interface Cards {
 	tooltip?: string,
 	open?: boolean,
 	id: number,
->>>>>>> main
 }
 interface NPC {
 	name: string,
