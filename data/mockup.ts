@@ -1,10 +1,11 @@
-interface Cards {
-	image?: string,
-	tooltip?: string,
-	open?: boolean,
-	id: number,
-}
+// import fool from '../assets/tarot_de_marseilles_major_arcana/fool.png'
 
+interface Cards {
+    image?: string,
+    tooltip?: string,
+    open?: boolean,
+    id: number,
+}
 interface NPC {
 	name: string,
 	stats: {
