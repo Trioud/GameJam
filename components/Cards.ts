@@ -24,7 +24,8 @@ import wor from '../assets/tarot_de_marseilles_major_arcana/21_world.png'
 import sinj from '../assets/tarot_de_marseilles_major_arcana/22_sinj.png'
 
 
-var name_npc = ["Acelin", "Amaury", "Anselme", "Anthiaume", "Arthaud", "Aubert", "Audibert", "Aymeric", "Edmond", "Enguerrand", "Ernaut", "Galaad", "Garin", "Gauvain", "Gauvain", "Gibouin", "Hugues", "Jehan", "Lancelot", "Merlin", "Perceval", "Raymond", "Roland", "Tancrède", "Tristan", "Yvain", "Aliénor", "Alix", "Aremburge", "Artémise", "Astride", "Berthe", "Blanche", "Diane", "Gallendis", "Grisélidis", "Hélix", "Héloïse", "Hersende", "Léonor", "Mélissande", "Morgane", "Viviane"];
+var name_npc = ["Acelin", "Amaury", "Anselme", "Anthiaume", "Arthaud", "Aubert", "Audibert", "Aymeric", "Edmond", "Enguerrand", "Ernaut, "Galaad", "Garin", "Gauvain", "Gauvain", "Gibouin", "Hugues", "Jehan", "Lancelot", "Merlin", "Perceval", "Raymond", "Roland", "Tancrède", "Tristan", "Yvain", "Aliénor", "Alix", "Aremburge", "Artémise", "Astride", "Berthe", "Blanche", "Diane", "Gallendis", "Grisélidis", "Hélix", "Héloïse", "Hersende", "Léonor", "Mélissande", "Morgane", "Viviane"];
+var example_card = [fool, magician, hp, empress, emperor, pope, lovers, chariot, justice, hermit, wof, strength, h_man, death, temp, tower, star, moon, sun, wor, sinj];
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -33,7 +34,7 @@ function getRandomInt(max) {
 function card_creator(name: any, num: number) : Cards {
     var card: Cards = {
         image: name,
-        id: num,  
+        id: num,
     };
     card.image = name;
     console.log(`${name} added.`)
@@ -51,26 +52,48 @@ function shuffle(array: Array<any>) {
     return array;
 }
 
+function fill_card(array: Array<any>) {
+    var test = shuffle(example_card);
+    var i = 0;
+    while (i != 5) {
+        array.push(test[i]);
+        i ++;
+    }
+    return array;
+}
+
 function create_cards(envy: number, job: number, will: number, happy: number,  devil: boolean, angel: boolean): Array<Cards> {
     var cards = []
     var id = 1;
     console.log(`${envy}, ${job}, ${will}, ${happy}, ${devil}, ${angel}`);
     if (devil == true || angel == true) {
-        const rate = getRandomInt(5)
-        if (rate == 5) {
-            cards.push(card_creator(jud, id));
-            id ++;
+        if (envy == 10 && job == 10 && will == 10 && happy == 10) {
+            const rate = getRandomInt(2)
+            if (rate == 1) {
+                cards.push(card_creator(jud, id));
+                fill_card(cards);
+                id ++;
+            } else {
+                cards.push(card_creator(sun, id));
+                fill_card(cards);
+                id ++;
+            }
         }
-        else if (devil == true) {
-            cards.push(card_creator(devil_image, id));
-            id ++;
+        if (envy == 0 && job == 0 && will == 0 && happy == 0) {
+            const rate = getRandomInt(2)
+            if (rate == 1) {
+                cards.push(card_creator(jud, id));
+                fill_card(cards);
+                id ++;
+            }
+            else {
+                cards.push(card_creator(devil_image, id));
+                fill_card(cards);
+                id ++;
+            }
         }
-        else if (envy == 10 && job == 10 && will == 10 && happy == 10) {
-            cards.push(card_creator(sun, id));
-            id ++;
-        }
-    }
-    else {
+    } else {
+
         if (envy >= 3 && will >= 3) {
         cards.push(card_creator(magician, id));
         id ++;
@@ -192,12 +215,21 @@ function create_npc(name:string): NPC {
             angel: false,
         }
     }
-    const rate = getRandomInt(50);
-    if (rate == 25) {
+    const rate = getRandomInt(20);
+    if (rate == 10) {
         npc.stats.devil = true;
+        npc.stats.envy = 0;
+        npc.stats.job = 0;
+        npc.stats.will = 0;
+        npc.stats.happy = 0;
+        
     }
-    else if (rate == 50) {
+    else if (rate == 20) {
         npc.stats.angel = true
+        npc.stats.envy = 10;
+        npc.stats.job = 10;
+        npc.stats.will = 10;
+        npc.stats.happy = 10;
     }
     npc.cards = create_cards(npc.stats.envy, npc.stats.job, npc.stats.will, npc.stats.happy, npc.stats.devil, npc.stats.angel);
     npc.cards = check_cards(npc.cards);
