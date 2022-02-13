@@ -55,9 +55,11 @@ function shuffle(array: Array<any>) {
 function fill_card(array: Array<any>) {
     var test = shuffle(example_card);
     var i = 0;
-    while (i != 5) {
-        array.push(card_creator(test[i], i));
+    var j = 2;
+    while (i != 4) {
+        array.push(card_creator(test[i], 2));
         i ++;
+        j ++;
     }
     return array;
 }
@@ -102,11 +104,11 @@ function create_cards(envy: number, job: number, will: number, happy: number,  d
             cards.push(card_creator(hp, id));
             id ++;
         }
-        if (happy == 10) {
+        if (happy == 6) {
             cards.push(card_creator(empress, id));
             id ++;
         }
-        if (job == 10) {
+        if (job == 8) {
             cards.push(card_creator(emperor, id));
             id ++;
         }
@@ -207,24 +209,23 @@ function create_npc(name:string): NPC {
     let npc: NPC = {
         name: name,
         stats: {
-            envy: getRandomInt(10),
-            job: getRandomInt(10),
-            will: getRandomInt(10),
-            happy: getRandomInt(10),
+            envy: getRandomInt(11),
+            job: getRandomInt(11),
+            will: getRandomInt(11),
+            happy: getRandomInt(11),
             devil: false,
             angel: false,
         }
     }
-    const rate = getRandomInt(20);
-    if (rate == 10) {
+    const rate = getRandomInt(3);
+    if (rate == 1) {
         npc.stats.devil = true;
         npc.stats.envy = 0;
         npc.stats.job = 0;
         npc.stats.will = 0;
         npc.stats.happy = 0;
-        
     }
-    else if (rate == 20) {
+    else if (rate == 2) {
         npc.stats.angel = true
         npc.stats.envy = 10;
         npc.stats.job = 10;
