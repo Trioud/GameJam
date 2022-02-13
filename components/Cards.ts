@@ -22,6 +22,7 @@ import sun from '../assets/tarot_de_marseilles_major_arcana/19_sun.png'
 import jud from '../assets/tarot_de_marseilles_major_arcana/20_judgment.png'
 import wor from '../assets/tarot_de_marseilles_major_arcana/21_world.png'
 import sinj from '../assets/tarot_de_marseilles_major_arcana/22_sinj.png'
+import legobmii from '../assets/tarot_de_marseilles_major_arcana/legobmii.png'
 
 
 var name_npc = ["Acelin", "Amaury", "Anselme", "Anthiaume", "Arthaud", "Aubert", "Audibert", "Aymeric", "Edmond", "Enguerrand", "Ernaut", "Galaad", "Garin", "Gauvain", "Gauvain", "Gibouin", "Hugues", "Jehan", "Lancelot", "Merlin", "Perceval", "Raymond", "Roland", "Tancrède", "Tristan", "Yvain", "Aliénor", "Alix", "Aremburge", "Artémise", "Astride", "Berthe", "Blanche", "Diane", "Gallendis", "Grisélidis", "Hélix", "Héloïse", "Hersende", "Léonor", "Mélissande", "Morgane", "Viviane"];
@@ -172,6 +173,10 @@ function create_cards(envy: number, job: number, will: number, happy: number,  d
             cards.push(card_creator(sinj, id));
             id ++;
         }
+        if (happy > 8 && envy > 8 && will > 8 && job < 5) {
+            cards.push(card_creator(legobmii, id));
+            id ++;
+        }
     }
     return cards;
 }
@@ -217,15 +222,15 @@ function create_npc(name:string): NPC {
             angel: false,
         }
     }
-    const rate = getRandomInt(2);
-    if (rate == 0) {
+    const rate = getRandomInt(19);
+    if (rate == 10) {
         npc.stats.devil = true;
         npc.stats.envy = 0;
         npc.stats.job = 0;
         npc.stats.will = 0;
         npc.stats.happy = 0;
     }
-    else if (rate == 1) {
+    else if (rate == 19) {
         npc.stats.angel = true
         npc.stats.envy = 10;
         npc.stats.job = 10;

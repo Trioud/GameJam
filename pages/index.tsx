@@ -45,7 +45,7 @@ const Card = ({ setLives, lives, item, reload, treload }) => {
 			setLives(lives - 1);
 		}
 	}
-
+	console.log(item.image);
 	return (
 		<div className="scene">
 			<div className="card" onClick={ClickCard} id="card">
@@ -102,7 +102,7 @@ const Card_Manager = ({ setLives, lives, data, index, setIndex, people, reload, 
 const Home: NextPage = () => {
 
 	const [secret, setSecret] = useState({ verb: "?", envy: "?", job: "?" });
-	const [lives, setLives] = useState(3);
+	const [lives, setLives] = useState(30000);
 	const [index, setIndex] = useState(0);
 	const [people, setPeople] = useState(mockup.length);
 	const [place, setPlace] = useState(15);
