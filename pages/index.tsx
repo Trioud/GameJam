@@ -136,6 +136,8 @@ const Home: NextPage = () => {
 	}
 
 	const onAccept = () => {
+		if (index === people - 1)
+			setIndex(index - 1);
 		Moveon();
 		setPeople(people - 1);
 		setPlace(place - 1);
