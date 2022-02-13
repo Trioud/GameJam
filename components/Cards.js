@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-// import magician from '../assets/tarot_de_marseilles_major_arcana/01_magician.png'
+var name_npc = ["Acelin", "Amaury", "Anselme", "Anthiaume", "Arthaud", "Aubert", "Audibert", "Aymeric", "Edmond", "Enguerrand", "Ernaut", "Galaad", "Garin", "Gauvain", "Gauvain", "Gibouin", "Hugues", "Jehan", "Lancelot", "Merlin", "Perceval", "Raymond", "Roland", "Tancrède", "Tristan", "Yvain", "Aliénor", "Alix", "Aremburge", "Artémise", "Astride", "Berthe", "Blanche", "Diane", "Gallendis", "Grisélidis", "Hélix", "Héloïse", "Hersende", "Léonor", "Mélissande", "Morgane", "Viviane"];
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
@@ -27,8 +27,8 @@ function create_cards(envy, job, will, happy, devil, angel) {
     var id = 1;
     console.log("".concat(envy, ", ").concat(job, ", ").concat(will, ", ").concat(happy, ", ").concat(devil, ", ").concat(angel));
     if (devil == true || angel == true) {
-        var rate = getRandomInt(100);
-        if (rate == 100) {
+        var rate = getRandomInt(5);
+        if (rate == 5) {
             cards.push(card_creator("the judgment", id));
             id++;
         }
@@ -115,10 +115,9 @@ function create_cards(envy, job, will, happy, devil, angel) {
 }
 function check_cards(array) {
     var len = array.length;
-    console.log(len);
     if (len < 5) {
         while (len != 5) {
-            array.push(card_creator("the gorilla", len + 1));
+            array.push(card_creator("the fool", len + 1));
             len++;
         }
     }
@@ -128,18 +127,16 @@ function reset_id(array) {
     var len = array.length;
     var i = 1;
     var j = 0;
-    console.log("salut");
     while (i <= len) {
-        console.log(i);
         array[j].id = i;
         i++;
         j++;
     }
     return (array);
 }
-function create_npc() {
+function create_npc(name) {
     var npc = {
-        name: "salut",
+        name: name,
         stats: {
             envy: getRandomInt(10),
             job: getRandomInt(10),
@@ -149,12 +146,31 @@ function create_npc() {
             angel: false
         }
     };
+    var rate = getRandomInt(50);
+    if (rate == 25) {
+        npc.stats.devil = true;
+    }
+    else if (rate == 50) {
+        npc.stats.angel = true;
+    }
     npc.cards = create_cards(npc.stats.envy, npc.stats.job, npc.stats.will, npc.stats.happy, npc.stats.devil, npc.stats.angel);
-    console.log(npc.cards);
+    // console.log(npc.cards);
     npc.cards = check_cards(npc.cards);
     npc.cards = shuffle(npc.cards);
-    console.log(npc.cards);
+    // console.log(npc.cards);
     npc.cards = reset_id(npc.cards);
-    console.log(npc.cards);
+    // console.log(npc.cards);
+    return npc;
 }
-create_npc();
+function create_all_npc() {
+    var i = 0;
+    var all_npc = [];
+    name_npc = shuffle(name_npc);
+    while (i != 30) {
+        all_npc.push(create_npc(name_npc[i]));
+        i++;
+    }
+    console.log(all_npc);
+    return all_npc;
+}
+create_all_npc();
