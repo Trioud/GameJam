@@ -25,11 +25,7 @@ import sinj from '../assets/tarot_de_marseilles_major_arcana/22_sinj.png'
 
 
 var name_npc = ["Acelin", "Amaury", "Anselme", "Anthiaume", "Arthaud", "Aubert", "Audibert", "Aymeric", "Edmond", "Enguerrand", "Ernaut", "Galaad", "Garin", "Gauvain", "Gauvain", "Gibouin", "Hugues", "Jehan", "Lancelot", "Merlin", "Perceval", "Raymond", "Roland", "Tancrède", "Tristan", "Yvain", "Aliénor", "Alix", "Aremburge", "Artémise", "Astride", "Berthe", "Blanche", "Diane", "Gallendis", "Grisélidis", "Hélix", "Héloïse", "Hersende", "Léonor", "Mélissande", "Morgane", "Viviane"];
-<<<<<<< HEAD
 var example_card = [fool, magician, hp, empress, emperor, pope, lovers, chariot, hermit, wof, strength, h_man, death, temp, tower, star, moon, sun, wor, sinj];
-=======
-var example_card = [fool, magician, hp, empress, emperor, pope, lovers, chariot, justice, hermit, wof, strength, h_man, death, temp, tower, star, moon, sun, wor, sinj];
->>>>>>> 030d481a2b93161148a2b35c868f7e8ef6e01d42
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -60,7 +56,7 @@ function fill_card(array: Array<any>) {
     var test = shuffle(example_card);
     var i = 0;
     while (i != 5) {
-        array.push(test[i]);
+        array.push(card_creator(test[i], i));
         i ++;
     }
     return array;
