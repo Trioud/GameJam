@@ -6,6 +6,7 @@ import fool from '../assets/tarot_de_marseilles_major_arcana/fool.png'
 import Image from 'next/image'
 import { create_all_npc } from '../components/Cards'
 import { results } from '../components/Results'
+import { resultTranslator } from '../components/results.translator'
 
 const Cards_left = ({ lives, people, place }) => {
 	return (
@@ -157,6 +158,7 @@ const Home: NextPage = () => {
 
 	const DisplayStats = () => {
 		const result = results(habitants);
+		const phrase = resultTranslator(result);
 		return (
 			<div style={{color: 'white', marginTop: "40px"}}>
 				<div>
@@ -170,6 +172,9 @@ const Home: NextPage = () => {
 				</div>
 				<div>
 					HAPPY : {result.happy} / 150
+				</div>
+				<div>
+					{phrase}
 				</div>
 			</div>
 		)
